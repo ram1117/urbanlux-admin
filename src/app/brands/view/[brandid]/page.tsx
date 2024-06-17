@@ -15,15 +15,15 @@ const Page = async ({ params }: { params: { brandid: string } }) => {
 
   return (
     <main className="min-h-screen p-4 lg:p-8">
-      <section className="grid grid-cols-1 lg:grid-cols-4">
-        <div className="w-full col-span-1 lg:col-span-1">
+      <section className="grid grid-cols-1 md:grid-cols-4">
+        <div className="w-full col-span-1 md:col-span-1">
           <ImageWrapper
             src={data.logo}
             alt={"brand log"}
-            imageSize={"w-full aspect-square"}
+            imageSize={"w-full aspect-square max-w-[400px] mx-auto"}
           ></ImageWrapper>
         </div>
-        <div className="w-full col-span-1 lg:col-span-3 flex flex-col gap-4 p-8">
+        <div className="w-full col-span-1 md:col-span-3 flex flex-col gap-4 p-8">
           <div className="flex flex-col gap-2">
             <h5 className="text-lg font-bold">Name</h5>
             <h5>{data.name}</h5>

@@ -10,3 +10,6 @@ export const getBrands = () => `${ADMIN_BASE_URL}/brands`;
 export const getBrand = (id: string) => `${ADMIN_BASE_URL}/brands/${id}`;
 export const createBrand = () => `${ADMIN_BASE_URL}/brands`;
 export const updateBrand = (id: string) => `${ADMIN_BASE_URL}/brands/${id}`;
+
+export const getAllMerchandise = () => `${ADMIN_BASE_URL}/items`;
+export const getMerchandise = (id: string) => `${ADMIN_BASE_URL}/items/${id}`;

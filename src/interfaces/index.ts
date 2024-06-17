@@ -37,3 +37,26 @@ export interface IBrand {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IInventory {
+  _id: string;
+  size: string;
+  stock: number;
+  price: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IMerchandise {
+  _id: string;
+  name: string;
+  description: string;
+  features: string[];
+  thumbnail: string;
+  images: string[];
+  category: string;
+  brand: IBrand;
+  inventory: IInventory[];
+  createdAt: string;
+  updatedAt: string;
+}

@@ -9,7 +9,7 @@ interface CategoryItemProps {
 
 const CategoryItem = ({ item }: CategoryItemProps) => {
   return (
-    <li className="flex flex-col gap-4">
+    <li className="flex flex-col gap-4 border">
       <ImageWrapper
         src={item.thumbnail}
         alt={"Category image"}
