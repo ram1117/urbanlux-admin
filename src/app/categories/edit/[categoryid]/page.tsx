@@ -12,6 +12,7 @@ const Page = async ({ params }: { params: { categoryid: string } }) => {
 
   return (
     <main className="min-h-screen">
+      <h1 className="text-2xl font-bold py-4 text-center">Edit Category</h1>
       <EditCategoryForm item={data}></EditCategoryForm>
     </main>
   );
