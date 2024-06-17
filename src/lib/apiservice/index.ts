@@ -23,6 +23,7 @@ export const makeApiRequest = async (
       method,
       body: JSON.stringify(data),
       headers: { "Content-type": "application/json", Cookie: cookies },
+      cache: "no-cache",
     });
   } catch (error) {}
 };

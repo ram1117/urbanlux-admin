@@ -1,15 +1,15 @@
 "use server";
 
-import { IEditCategoryFormState } from "@/interfaces";
+import { INewBrandFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
-import { createCategory } from "@/lib/apiurls";
+import { createBrand } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 const validationSchema = z.object({
-  thumbnail: z
+  logo: z
     .any()
     .refine((file) => file !== null, "Image required")
     .refine(
@@ -18,36 +18,40 @@ const validationSchema = z.object({
     ),
   name: z.string().min(3),
   description: z.string().min(10),
-  category_code: z.string().min(3),
+  brand_code: z.string().min(3),
+  create_store: z.string().min(2, { message: "Required" }),
 });
 
-const CreateCategoryAction = async (
-  formState: IEditCategoryFormState,
+const NewBrandAction = async (
+  formState: INewBrandFormState,
   formData: FormData,
-): Promise<IEditCategoryFormState> => {
+): Promise<INewBrandFormState> => {
   const validation = validationSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
-  if (!validation.success)
+
+  if (!validation.success) {
     return { errors: validation.error.flatten().fieldErrors };
+  }
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { thumbnail, ...restData } = validation.data;
+    const { logo, ...restData } = validation.data;
     let bodyData: object = {};
 
-    const imageUrl = await uploadImage(validation.data.thumbnail, "category");
+    const imageUrl = await uploadImage(validation.data.logo, "brands");
     if (imageUrl) {
       bodyData = {
         ...restData,
-        thumbnail: imageUrl,
-        category_code: `cat_${restData.category_code}`,
+        logo: imageUrl,
+        create_store: restData.create_store === "yes",
+        brand_code: `brand_${restData.brand_code}`,
       };
     }
 
     const response = await makeApiRequest(
       API_METHODS.POST,
-      createCategory(),
+      createBrand(),
       bodyData,
     );
 
@@ -60,7 +64,7 @@ const CreateCategoryAction = async (
     return { errors: { _form: ["Something went wrong"] } };
   }
 
-  redirect(`/categories`);
+  redirect(`/brands`);
 };
 
-export default CreateCategoryAction;
+export default NewBrandAction;

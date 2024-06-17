@@ -1,20 +1,18 @@
 "use client";
 
-import CreateCategoryAction from "@/app/actions/createcategory.action";
+import NewBrandAction from "@/app/actions/newbrand.action";
 import FormSubmit from "@/atoms/FormSubmit";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { IEditCategoryFormState } from "@/interfaces";
+import { INewBrandFormState } from "@/interfaces";
 import { useFormState } from "react-dom";
 
-const initialState: IEditCategoryFormState = { errors: { _form: [] } };
+const initialState: INewBrandFormState = { errors: { _form: [] } };
 
-const NewCategoryForm = () => {
-  const [formState, formAction] = useFormState(
-    CreateCategoryAction,
-    initialState,
-  );
+const NewBrandForm = () => {
+  const [formState, formAction] = useFormState(NewBrandAction, initialState);
 
   return (
     <form
@@ -23,19 +21,19 @@ const NewCategoryForm = () => {
     >
       <div className="flex flex-col gap-1">
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="thumbnail" className="w-full md:w-1/4">
-            New Thumbnail
+          <Label htmlFor="logo" className="w-full md:w-1/4">
+            Logo
           </Label>
           <Input
-            id="thumbnail"
-            name="thumbnail"
+            id="logo"
+            name="logo"
             type="file"
             accept=".jpg,.jpeg,.png"
             className="rounded-none  w-full md:w-3/4"
           ></Input>
         </div>
         <p className="text-xs text-red-800 text-center">
-          {formState.errors.thumbnail?.join(", ")}
+          {formState.errors.logo?.join(", ")}
         </p>
       </div>
       <div className="flex flex-col gap-1">
@@ -72,18 +70,39 @@ const NewCategoryForm = () => {
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="category_code" className="w-full md:w-1/4">
-            Category Code
+          <Label htmlFor="brand_code" className="w-full md:w-1/4">
+            Brand Code
           </Label>
           <Input
-            id="category_code"
-            name="category_code"
+            id="brand_code"
+            name="brand_code"
             type="text"
             className="rounded-none  w-full md:w-3/4"
           ></Input>
         </div>
         <p className="text-xs text-red-800 text-center">
-          {formState.errors.category_code?.join(", ")}
+          {formState.errors.brand_code?.join(", ")}
+        </p>
+      </div>
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-col md:flex-row gap-2 md:items-center">
+          <Label htmlFor="create_store" className="w-full md:w-1/4">
+            Create Store
+          </Label>
+          <RadioGroup
+            name="create_store"
+            id="create_store"
+            defaultValue="no"
+            className="flex flex-row"
+          >
+            <RadioGroupItem value="yes" id="yes"></RadioGroupItem>
+            <Label htmlFor="yes">Yes</Label>
+            <RadioGroupItem value="no" id="no"></RadioGroupItem>
+            <Label htmlFor="no">No</Label>
+          </RadioGroup>
+        </div>
+        <p className="text-xs text-red-800 text-center">
+          {formState.errors.create_store?.join(", ")}
         </p>
       </div>
       <p className="text-xs text-red-800 text-center">
@@ -96,4 +115,4 @@ const NewCategoryForm = () => {
   );
 };
 
-export default NewCategoryForm;
+export default NewBrandForm;
