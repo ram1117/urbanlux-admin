@@ -2,8 +2,8 @@ import DataNotFound from "@/atoms/DataNotFound";
 import ImageWrapper from "@/atoms/ImageWrapper";
 import AddImageDialog from "@/components/merchandise/AddImageDialog";
 import DeleteImageForm from "@/components/merchandise/DeleteImageForm";
+import EditMerchDialog from "@/components/merchandise/EditMerchDialog";
 import InventoryDialog from "@/components/merchandise/InventoryDialog";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -15,7 +15,6 @@ import {
 import { IInventory, IMerchandise } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getMerchandise } from "@/lib/apiurls";
-import Link from "next/link";
 
 const Page = async ({ params }: { params: { itemid: string } }) => {
   const response = await makeApiRequest(
@@ -38,9 +37,7 @@ const Page = async ({ params }: { params: { itemid: string } }) => {
         </div>
         <div className="col-span-1 md:col-span-3 border p-4">
           <div className="flex justify-end">
-            <Button className="w-max">
-              <Link href={`/merchandise/edit/${data._id}`}>Edit Item</Link>
-            </Button>
+            <EditMerchDialog merchandise={data}></EditMerchDialog>
           </div>
 
           <div className="flex flex-col my-1">

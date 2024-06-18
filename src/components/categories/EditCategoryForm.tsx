@@ -45,7 +45,7 @@ const EditCategoryForm = ({ item, setOpen }: EditCategoryFormProps) => {
       >
         <div className="flex flex-col gap-1">
           <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <Label htmlFor="name" className="w-full md:w-1/4">
+            <Label htmlFor="thumbnail" className="w-full md:w-1/4">
               New Thumbnail
             </Label>
             <Input

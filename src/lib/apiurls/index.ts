@@ -19,3 +19,4 @@ export const addImage = (id: string) =>
   `${ADMIN_BASE_URL}/items/image/add/${id}`;
 export const updateInventory = (id: string) =>
   `${ADMIN_BASE_URL}/items/inventory/${id}`;
+export const createMerchandise = () => `${ADMIN_BASE_URL}/items/create`;

@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -9,23 +8,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import NewCategoryForm from "./NewCategoryForm";
-const NewCategoryDialog = () => {
+import NewBrandForm from "./NewBrandForm";
+
+const NewBrandDialog = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="">
-        <Button>New Category</Button>
+        <Button>New Brand</Button>
       </DialogTrigger>
       <DialogContent className="overflow-scroll max-h-[90vh] w-11/12 max-w-[900px]">
         <DialogHeader>
-          <DialogTitle>New Category</DialogTitle>
+          <DialogTitle>New Brand</DialogTitle>
         </DialogHeader>
-        <NewCategoryForm setOpen={setOpen}></NewCategoryForm>
+        <NewBrandForm setOpen={setOpen}></NewBrandForm>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default NewCategoryDialog;
+export default NewBrandDialog;

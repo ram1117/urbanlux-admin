@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { INewBrandFormState } from "@/interfaces";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 
 const initialState: INewBrandFormState = {
@@ -14,14 +15,21 @@ const initialState: INewBrandFormState = {
   errors: { _form: [] },
 };
 
-const NewBrandForm = () => {
+interface NewBrandFormProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NewBrandForm = ({ setOpen }: NewBrandFormProps) => {
   const [formState, formAction] = useFormState(NewBrandAction, initialState);
 
+  useEffect(() => {
+    if (formState.success) {
+      setOpen(false);
+    }
+  }, [formState.success, setOpen]);
+
   return (
-    <form
-      className="w-11/12 md:w-4/5 max-w-[768px] mx-auto my-12 flex flex-col gap-4"
-      action={formAction}
-    >
+    <form className="my-12 flex flex-col gap-4" action={formAction}>
       <div className="flex flex-col gap-1">
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
           <Label htmlFor="logo" className="w-full md:w-1/4">

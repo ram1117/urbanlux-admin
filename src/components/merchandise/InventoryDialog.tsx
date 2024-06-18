@@ -21,7 +21,7 @@ const InventoryDialog = ({ items, merchandiseId }: InventoryDialogProps) => {
       <DialogTrigger asChild className="my-6">
         <Button>Update Inventory</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[800px]">
+      <DialogContent className="overflow-scroll max-h-[90vh] w-11/12 max-w-[900px]">
         <DialogHeader>
           <DialogTitle>Update Inventory Items</DialogTitle>
         </DialogHeader>

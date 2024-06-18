@@ -21,7 +21,7 @@ const EditCategoryDialog = ({ category }: EditCategoryDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="my-6">
+      <DialogTrigger asChild className="">
         <Button>Edit Category</Button>
       </DialogTrigger>
       <DialogContent className="overflow-scroll max-h-[90vh] w-11/12 max-w-[900px]">
