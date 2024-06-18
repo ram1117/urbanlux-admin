@@ -9,16 +9,27 @@ import { Textarea } from "@/components/ui/textarea";
 import { useFormState } from "react-dom";
 import ImageWrapper from "@/atoms/ImageWrapper";
 import EditBrandAction from "@/app/actions/editbrand.action";
+import { useEffect } from "react";
 
 interface EditBrandFormProps {
   item: IBrand;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const initialState: INewBrandFormState = { errors: { _form: [] } };
+const initialState: INewBrandFormState = {
+  success: false,
+  errors: { _form: [] },
+};
 
-const EditBrandForm = ({ item }: EditBrandFormProps) => {
+const EditBrandForm = ({ item, setOpen }: EditBrandFormProps) => {
   const bindedAction = EditBrandAction.bind(null, item._id);
   const [formState, formAction] = useFormState(bindedAction, initialState);
+
+  useEffect(() => {
+    if (formState.success) {
+      setOpen(false);
+    }
+  }, [formState.success, setOpen]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 p-8">
@@ -26,11 +37,11 @@ const EditBrandForm = ({ item }: EditBrandFormProps) => {
         <ImageWrapper
           src={item.logo}
           alt={"brand logo"}
-          imageSize={"w-full aspect-square mx-auto my-4"}
+          imageSize={"w-full aspect-square mx-auto my-4 max-w-[400px] mx-auto"}
         ></ImageWrapper>
       </div>
       <form
-        className="w-11/12 md:w-4/5 max-w-[768px] my-12 lg:my-4 col-span-1 lg:col-span-3 flex flex-col gap-4"
+        className="my-12 lg:my-4 col-span-1 lg:col-span-3 flex flex-col gap-4"
         action={formAction}
       >
         <div className="flex flex-col gap-1">

@@ -4,7 +4,7 @@ import { IEditCategoryFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { createCategory } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/jpg"];
@@ -29,7 +29,7 @@ const CreateCategoryAction = async (
     Object.fromEntries(formData.entries()),
   );
   if (!validation.success)
-    return { errors: validation.error.flatten().fieldErrors };
+    return { success: false, errors: validation.error.flatten().fieldErrors };
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -53,14 +53,16 @@ const CreateCategoryAction = async (
 
     if (!response?.ok) {
       const error = await response?.json();
-      return { errors: { _form: [error.message] } };
+      return { success: false, errors: { _form: [error.message] } };
     }
   } catch (error) {
-    if (error instanceof Error) return { errors: { _form: [error.message] } };
-    return { errors: { _form: ["Something went wrong"] } };
+    if (error instanceof Error)
+      return { success: false, errors: { _form: [error.message] } };
+    return { success: false, errors: { _form: ["Something went wrong"] } };
   }
 
-  redirect(`/categories`);
+  revalidatePath(`/categories`);
+  return { success: true, errors: {} };
 };
 
 export default CreateCategoryAction;

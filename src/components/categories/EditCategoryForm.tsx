@@ -7,30 +7,40 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ICategory, IEditCategoryFormState } from "@/interfaces";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 
 interface EditCategoryFormProps {
   item: ICategory;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const initialState: IEditCategoryFormState = { errors: { _form: [] } };
+const initialState: IEditCategoryFormState = {
+  success: false,
+  errors: { _form: [] },
+};
 
-const EditCategoryForm = ({ item }: EditCategoryFormProps) => {
+const EditCategoryForm = ({ item, setOpen }: EditCategoryFormProps) => {
   const bindedAction = EditCategoryAction.bind(null, item._id);
   const [formState, formAction] = useFormState(bindedAction, initialState);
+  useEffect(() => {
+    if (formState.success) {
+      setOpen(false);
+    }
+  }, [formState.success, setOpen]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 p-8">
+    <div className="my-4 grid grid-cols-1 lg:grid-cols-4 gap-4 p-8">
       <div className="col-span-1">
         <ImageWrapper
           src={item.thumbnail}
-          alt={"category thumnail"}
-          imageSize={"w-full aspect-square mx-auto my-4"}
+          alt={"category thumbnail"}
+          imageSize={"w-full aspect-square mx-auto my-4 max-w-[400px] mx-auto"}
         ></ImageWrapper>
       </div>
 
       <form
-        className="w-11/12 md:w-4/5 max-w-[768px] my-12 lg:my-4 col-span-1 lg:col-span-3 flex flex-col gap-4"
+        className="my-12 lg:my-4 col-span-1 lg:col-span-3 flex flex-col gap-4"
         action={formAction}
       >
         <div className="flex flex-col gap-1">

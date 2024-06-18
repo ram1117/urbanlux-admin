@@ -9,7 +9,7 @@ interface CategoryItemProps {
 const CategoryItem = ({ item }: CategoryItemProps) => {
   return (
     <li className="flex flex-col gap-4 border">
-      <Link href={`/categories/view/${item._id}`}>
+      <Link href={`/categories/${item._id}`}>
         <ImageWrapper
           src={item.thumbnail}
           alt={"Category image"}

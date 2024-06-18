@@ -9,7 +9,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { INewBrandFormState } from "@/interfaces";
 import { useFormState } from "react-dom";
 
-const initialState: INewBrandFormState = { errors: { _form: [] } };
+const initialState: INewBrandFormState = {
+  success: false,
+  errors: { _form: [] },
+};
 
 const NewBrandForm = () => {
   const [formState, formAction] = useFormState(NewBrandAction, initialState);

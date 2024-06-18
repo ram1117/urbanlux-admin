@@ -7,6 +7,7 @@ export interface ICategory {
 }
 
 export interface IEditCategoryFormState {
+  success: boolean;
   errors: {
     thumbnail?: string[];
     name?: string[];
@@ -17,6 +18,7 @@ export interface IEditCategoryFormState {
 }
 
 export interface INewBrandFormState {
+  success: boolean;
   errors: {
     logo?: string[];
     name?: string[];

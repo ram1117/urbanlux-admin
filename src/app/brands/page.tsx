@@ -12,7 +12,6 @@ const Page = async () => {
   }
 
   const data = await response.json();
-  console.log(data);
 
   return (
     <main className="min-h-screen p-4 lg:p-8">

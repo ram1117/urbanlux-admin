@@ -57,7 +57,6 @@ const AddImageAction = async (
       );
       if (!response?.ok) {
         const error = await response?.json();
-        console.log(error.message);
         return { errors: { _form: [error.message] } };
       }
     }

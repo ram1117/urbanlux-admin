@@ -9,7 +9,7 @@ interface BrandItemProps {
 const BrandItem = ({ item }: BrandItemProps) => {
   return (
     <li className="flex flex-col gap-4">
-      <Link href={`/brands/view/${item._id}`}>
+      <Link href={`/brands/${item._id}`}>
         <ImageWrapper
           src={item.logo}
           alt={"brand logo"}
