@@ -60,3 +60,18 @@ export interface IMerchandise {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IGenericFormState {
+  success?: boolean;
+  errors: { _form?: string[] };
+}
+
+export interface IAddImageFormState {
+  success?: boolean;
+  errors: { _form?: string[]; image?: string[]; thumbnail?: string[] };
+}
+
+export interface IUpdateInventoryFormState {
+  success: boolean;
+  errors: { _form?: string[]; stock?: string[]; price?: string[] };
+}

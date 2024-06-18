@@ -24,6 +24,11 @@ const Page = async ({ params }: { params: { categoryid: string } }) => {
           ></ImageWrapper>
         </div>
         <div className="w-full col-span-1 md:col-span-3 flex flex-col gap-4 p-8">
+          <div className="flex justify-end">
+            <Button className="w-max">
+              <Link href={`/categories/edit/${data._id}`}>Edit</Link>
+            </Button>
+          </div>
           <div className="flex flex-col gap-2">
             <h5 className="text-lg font-bold">Name</h5>
             <h5>{data.name}</h5>
@@ -38,10 +43,6 @@ const Page = async ({ params }: { params: { categoryid: string } }) => {
             <h5 className="text-lg font-bold">Code</h5>
             <p>{data.category_code}</p>
           </div>
-
-          <Button className="w-max">
-            <Link href={`/categories/edit/${data._id}`}>Edit</Link>
-          </Button>
         </div>
       </section>
     </main>

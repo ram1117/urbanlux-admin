@@ -36,7 +36,6 @@ const EditBrandAction = async (
   );
 
   if (!validation.success) {
-    console.log(validation.error.flatten().fieldErrors);
     return { errors: validation.error.flatten().fieldErrors };
   }
   try {

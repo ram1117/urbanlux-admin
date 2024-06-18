@@ -1,5 +1,8 @@
 import DataNotFound from "@/atoms/DataNotFound";
 import ImageWrapper from "@/atoms/ImageWrapper";
+import AddImageDialog from "@/components/merchandise/AddImageDialog";
+import DeleteImageForm from "@/components/merchandise/DeleteImageForm";
+import InventoryDialog from "@/components/merchandise/InventoryDialog";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -22,7 +25,6 @@ const Page = async ({ params }: { params: { itemid: string } }) => {
   if (!response?.ok) return <DataNotFound></DataNotFound>;
 
   const data: IMerchandise = await response.json();
-  console.log(data);
 
   return (
     <main className="min-h-screen p-4 lg:p-8">
@@ -63,6 +65,10 @@ const Page = async ({ params }: { params: { itemid: string } }) => {
               ))}
             </ul>
           </div>
+          <InventoryDialog
+            items={data.inventory}
+            merchandiseId={data._id}
+          ></InventoryDialog>
           <Table className="my-4 text-black">
             <TableHeader>
               <TableRow>
@@ -83,15 +89,23 @@ const Page = async ({ params }: { params: { itemid: string } }) => {
           </Table>
         </div>
       </section>
-      <section className="min-h-[30vh] grid grid-cols-2 lg:grid-cols-4 my-6">
-        {data.images.map((image: string) => (
-          <ImageWrapper
-            src={image}
-            alt={"product image"}
-            imageSize={"w-full aspect-square"}
-            key={image}
-          ></ImageWrapper>
-        ))}
+
+      <section className="min-h-[30vh]">
+        <div className="my-6">
+          <AddImageDialog id={data._id} name={data.name}></AddImageDialog>
+        </div>
+        <ul className=" grid grid-cols-2 lg:grid-cols-4 my-6 gap-4">
+          {data.images.map((image: string) => {
+            if (image)
+              return (
+                <DeleteImageForm
+                  image={image}
+                  id={data._id}
+                  key={image}
+                ></DeleteImageForm>
+              );
+          })}
+        </ul>
       </section>
     </main>
   );

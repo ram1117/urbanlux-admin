@@ -13,3 +13,9 @@ export const updateBrand = (id: string) => `${ADMIN_BASE_URL}/brands/${id}`;
 
 export const getAllMerchandise = () => `${ADMIN_BASE_URL}/items`;
 export const getMerchandise = (id: string) => `${ADMIN_BASE_URL}/items/${id}`;
+export const deleteImage = (id: string) =>
+  `${ADMIN_BASE_URL}/items/image/delete/${id}`;
+export const addImage = (id: string) =>
+  `${ADMIN_BASE_URL}/items/image/add/${id}`;
+export const updateInventory = (id: string) =>
+  `${ADMIN_BASE_URL}/items/inventory/${id}`;
