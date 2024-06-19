@@ -1,4 +1,5 @@
 const ADMIN_BASE_URL = process.env.API_ADMIN;
+const CLIENT_ADMIN_BASE_URL = process.env.NEXT_PUBLIC_API_ADMIN;
 
 export const getCategories = () => `${ADMIN_BASE_URL}/category`;
 export const getCategory = (id: string) => `${ADMIN_BASE_URL}/category/${id}`;
@@ -20,3 +21,9 @@ export const addImage = (id: string) =>
 export const updateInventory = (id: string) =>
   `${ADMIN_BASE_URL}/items/inventory/${id}`;
 export const createMerchandise = () => `${ADMIN_BASE_URL}/items/create`;
+export const updateMerchandise = (id: string) =>
+  `${ADMIN_BASE_URL}/items/${id}`;
+export const addNewSize = (id: string) => `${ADMIN_BASE_URL}/items/size/${id}`;
+
+export const getClientBrands = () => `${CLIENT_ADMIN_BASE_URL}/brands`;
+export const getClientCategories = () => `${CLIENT_ADMIN_BASE_URL}/category`;

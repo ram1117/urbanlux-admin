@@ -1,3 +1,4 @@
+"use client";
 import { IMerchandise } from "@/interfaces";
 import { Button } from "../ui/button";
 import {
@@ -9,37 +10,51 @@ import {
 } from "../ui/dialog";
 import EditMerchForm from "./EditMerchForm";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
-import DataNotFound from "@/atoms/DataNotFound";
-import { getBrands, getCategories } from "@/lib/apiurls";
+import { getClientBrands, getClientCategories } from "@/lib/apiurls";
+import { useEffect, useState } from "react";
 
 interface EditMerchDialogProps {
   merchandise: IMerchandise;
 }
-const EditMerchDialog = async ({ merchandise }: EditMerchDialogProps) => {
-  const brandResponse = await makeApiRequest(API_METHODS.GET, getBrands());
-  if (!brandResponse?.ok) return <DataNotFound></DataNotFound>;
-  const brandData = await brandResponse.json();
+const EditMerchDialog = ({ merchandise }: EditMerchDialogProps) => {
+  const [open, setOpen] = useState(false);
+  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [apiError, setApiError] = useState<string[]>([]);
 
-  const categoryResponse = await makeApiRequest(
-    API_METHODS.GET,
-    getCategories(),
-  );
-  if (!categoryResponse?.ok) return <DataNotFound></DataNotFound>;
-  const categoryData = await categoryResponse.json();
+  useEffect(() => {
+    makeApiRequest(API_METHODS.GET, getClientBrands())
+      .then((response) => response?.json())
+      .then((data) => {
+        setBrands(data);
+      })
+      .catch((error: Error) => setApiError((prev) => [...prev, error.message]));
+
+    makeApiRequest(API_METHODS.GET, getClientCategories())
+      .then((response) => response?.json())
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error: Error) => setApiError((prev) => [...prev, error.message]));
+  }, []);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild className="">
         <Button>Edit</Button>
       </DialogTrigger>
       <DialogContent className="overflow-scroll max-h-[90vh] w-11/12 max-w-[900px]">
         <DialogHeader>
           <DialogTitle>Edit Merchandise Details</DialogTitle>
+          {apiError.length > 0 && (
+            <p className="text-xs text-red-800">{apiError.join(",")}</p>
+          )}
         </DialogHeader>
         <EditMerchForm
           merchandise={merchandise}
-          brands={brandData}
-          categories={categoryData}
+          brands={brands}
+          categories={categories}
+          setOpen={setOpen}
         ></EditMerchForm>
       </DialogContent>
     </Dialog>

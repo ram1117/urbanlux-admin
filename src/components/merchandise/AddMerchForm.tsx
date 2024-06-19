@@ -47,7 +47,7 @@ const AddMerchForm = ({ brands, categories }: AddMerchFormProps) => {
       ></FormSelect>
 
       <FormSelect
-        name={"brand"}
+        name={"category"}
         label={"Select Category"}
         items={categories}
         errorMsg={formState.errors.category?.join(", ")}
@@ -57,7 +57,16 @@ const AddMerchForm = ({ brands, categories }: AddMerchFormProps) => {
         label={`Sizes- "," separated`}
         type={"text"}
         name={"sizes"}
+        errormsg={formState.errors.sizes?.join(", ")}
       ></FormInput>
+
+      <FormInput
+        label={"Color"}
+        type={"text"}
+        name={"color"}
+        errormsg={formState.errors.color?.join(", ")}
+      ></FormInput>
+
       <FormFile
         name={"thumbnail"}
         label={"Thumbnail"}

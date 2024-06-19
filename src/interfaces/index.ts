@@ -58,6 +58,7 @@ export interface IMerchandise {
   images: string[];
   category: ICategory;
   brand: IBrand;
+  color: string;
   inventory: IInventory[];
   createdAt: string;
   updatedAt: string;
@@ -89,5 +90,27 @@ export interface IAddMerchFormState {
     thumbnail?: string[];
     features?: string[];
     sizes?: string[];
+    color?: string[];
+  };
+}
+
+export interface IEditMerchFormState {
+  success: boolean;
+  errors: {
+    _form?: string[];
+    name?: string[];
+    description?: string[];
+    brand?: string[];
+    category?: string[];
+    features?: string[];
+    color?: string[];
+  };
+}
+
+export interface IAddSizeFormState {
+  success: boolean;
+  errors: {
+    _form?: string[];
+    size?: string[];
   };
 }

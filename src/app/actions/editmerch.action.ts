@@ -1,46 +1,55 @@
 "use server";
 
-import { IUpdateInventoryFormState } from "@/interfaces";
+import { IEditMerchFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
-import { updateInventory } from "@/lib/apiurls";
+import { updateMerchandise } from "@/lib/apiurls";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const validationSchema = z.object({
-  stock: z.preprocess((val) => Number(val), z.number()),
-  price: z.preprocess((val) => Number(val), z.number().min(1)),
+  name: z.string().min(3),
+  description: z.string().min(10),
+  features: z.string().min(10),
+  brand: z.string().min(2),
+  category: z.string().min(2),
+  color: z.string().min(3),
 });
 
-const UpdateInventoryAction = async (
+const EditMerchAction = async (
   id: string,
-  merchandiseId: string,
-  formState: IUpdateInventoryFormState,
+  formState: IEditMerchFormState,
   formData: FormData,
-): Promise<IUpdateInventoryFormState> => {
+): Promise<IEditMerchFormState> => {
   const validation = validationSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
-  if (!validation.success) {
+
+  if (!validation.success)
     return { success: false, errors: validation.error.flatten().fieldErrors };
-  }
+  revalidatePath(`/merchandise/${id}`);
 
   try {
     const response = await makeApiRequest(
       API_METHODS.PATCH,
-      updateInventory(id),
-      { ...validation.data, merchandiseId },
+      updateMerchandise(id),
+      { ...validation.data, features: validation.data.features.split("/") },
     );
+
     if (!response?.ok) {
       const error = await response?.json();
       return { success: false, errors: { _form: [error.message] } };
     }
+
+    const data = await response.json();
+    console.log(data);
   } catch (error) {
     if (error instanceof Error)
       return { success: false, errors: { _form: [error.message] } };
     return { success: false, errors: { _form: ["Something went wrong"] } };
   }
-  revalidatePath(`/merchandise/${merchandiseId}`);
+
+  revalidatePath(`/merchandise/${id}`);
   return { success: true, errors: {} };
 };
 
-export default UpdateInventoryAction;
+export default EditMerchAction;

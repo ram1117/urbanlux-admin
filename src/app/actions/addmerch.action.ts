@@ -15,6 +15,7 @@ const validationSchema = z.object({
   sizes: z.string().min(2),
   brand: z.string().min(2),
   category: z.string().min(2),
+  color: z.string().min(3),
   thumbnail: z
     .any()
     .refine((file) => file !== null, "Image required")
@@ -37,7 +38,6 @@ const AddMerchAction = async (
   formData: FormData,
 ): Promise<IAddMerchFormState> => {
   const images = formData.getAll("images");
-
   const validation = validationSchema.safeParse({
     ...Object.fromEntries(formData.entries()),
     images,
@@ -81,6 +81,7 @@ const AddMerchAction = async (
       responseData = await response.json();
     }
   } catch (error) {
+    console.error(error);
     if (error instanceof Error) return { errors: { _form: [error.message] } };
     return { errors: { _form: ["Somethig went wrong"] } };
   }
