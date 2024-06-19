@@ -1,5 +1,7 @@
 const DataNotFound = () => (
-  <h2 className="my-8 text-2xl font-bold italics">Unable to get data</h2>
+  <h1 className="my-8 text-lg font-bold italic text-center">
+    Unable to get data
+  </h1>
 );
 
 export default DataNotFound;

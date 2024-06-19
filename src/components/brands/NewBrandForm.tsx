@@ -1,11 +1,10 @@
 "use client";
 
 import NewBrandAction from "@/app/actions/newbrand.action";
+import { FormFile, FormInput, FormTextArea } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
 import { INewBrandFormState } from "@/interfaces";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
@@ -30,71 +29,31 @@ const NewBrandForm = ({ setOpen }: NewBrandFormProps) => {
 
   return (
     <form className="my-12 flex flex-col gap-4" action={formAction}>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="logo" className="w-full md:w-1/4">
-            Logo
-          </Label>
-          <Input
-            id="logo"
-            name="logo"
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            className="rounded-none  w-full md:w-3/4"
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.logo?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="name" className="w-full md:w-1/4">
-            Name
-          </Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            className="rounded-none  w-full md:w-3/4"
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.name?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="description" className="w-full md:w-1/4">
-            Description
-          </Label>
-          <Textarea
-            id="description"
-            name="description"
-            className="rounded-none w-full md:w-3/4"
-            rows={7}
-          ></Textarea>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.description?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="brand_code" className="w-full md:w-1/4">
-            Brand Code
-          </Label>
-          <Input
-            id="brand_code"
-            name="brand_code"
-            type="text"
-            className="rounded-none  w-full md:w-3/4"
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.brand_code?.join(", ")}
-        </p>
-      </div>
+      <FormFile
+        name={"logo"}
+        label={"Logo"}
+        errorMsg={formState.errors.logo?.join(", ")}
+      ></FormFile>
+
+      <FormInput
+        label={"Name"}
+        type={"text"}
+        name={"name"}
+        errormsg={formState.errors.name?.join(", ")}
+      ></FormInput>
+
+      <FormTextArea
+        label={"Description"}
+        name={"description"}
+        errormsg={formState.errors.description?.join(", ")}
+      ></FormTextArea>
+      <FormInput
+        label={"Brand Code"}
+        type={"text"}
+        name={"brand_code"}
+        errormsg={formState.errors.brand_code?.join(", ")}
+      ></FormInput>
+
       <div className="flex flex-col gap-1">
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
           <Label htmlFor="create_store" className="w-full md:w-1/4">

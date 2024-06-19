@@ -1,11 +1,9 @@
 "use client";
 
 import EditCategoryAction from "@/app/actions/editcategory.action";
+import { FormFile, FormInput, FormTextArea } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
 import ImageWrapper from "@/atoms/ImageWrapper";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { ICategory, IEditCategoryFormState } from "@/interfaces";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
@@ -43,76 +41,37 @@ const EditCategoryForm = ({ item, setOpen }: EditCategoryFormProps) => {
         className="my-12 lg:my-4 col-span-1 lg:col-span-3 flex flex-col gap-4"
         action={formAction}
       >
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <Label htmlFor="thumbnail" className="w-full md:w-1/4">
-              New Thumbnail
-            </Label>
-            <Input
-              id="thumbnail"
-              name="thumbnail"
-              type="file"
-              accept=".jpg,.jpeg,.png"
-              className="rounded-none  w-full md:w-3/4"
-            ></Input>
-          </div>
-          <p className="text-xs text-red-800 text-center">
-            {formState.errors.thumbnail?.join(", ")}
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <Label htmlFor="name" className="w-full md:w-1/4">
-              Name
-            </Label>
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              defaultValue={item.name}
-              className="rounded-none  w-full md:w-3/4"
-            ></Input>
-          </div>
-          <p className="text-xs text-red-800 text-center">
-            {formState.errors.name?.join(", ")}
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <Label htmlFor="description" className="w-full md:w-1/4">
-              Description
-            </Label>
-            <Textarea
-              id="description"
-              name="description"
-              defaultValue={item.description}
-              className="rounded-none w-full md:w-3/4"
-              rows={7}
-            ></Textarea>
-          </div>
-          <p className="text-xs text-red-800 text-center">
-            {formState.errors.description?.join(", ")}
-          </p>
-        </div>
-        <div className="flex flex-col gap-1">
-          <div className="flex flex-col md:flex-row gap-2 md:items-center">
-            <Label htmlFor="category_code" className="w-full md:w-1/4">
-              Category Code
-            </Label>
-            <Input
-              id="category_code"
-              name="category_code"
-              type="text"
-              defaultValue={item.category_code}
-              className="rounded-none  w-full md:w-3/4"
-              readOnly
-              disabled
-            ></Input>
-          </div>
-          <p className="text-xs text-red-800 text-center">
-            {formState.errors.category_code?.join(", ")}
-          </p>
-        </div>
+        <FormFile
+          name={"thumbnail"}
+          label={"New Thumbnail"}
+          errorMsg={formState.errors.thumbnail?.join(", ")}
+        ></FormFile>
+
+        <FormInput
+          label={"Name"}
+          type={"text"}
+          name={"name"}
+          errormsg={formState.errors.name?.join(", ")}
+          defaultValue={item.name}
+        ></FormInput>
+
+        <FormTextArea
+          label={"Description"}
+          name={"description"}
+          errormsg={formState.errors.description?.join(", ")}
+          defaultValue={item.description}
+        ></FormTextArea>
+
+        <FormInput
+          label={"Category Code"}
+          type={"text"}
+          name={"category_code"}
+          errormsg={formState.errors.category_code?.join(", ")}
+          defaultValue={item.category_code}
+          disabled={true}
+          readonly={true}
+        ></FormInput>
+
         <p className="text-xs text-red-800 text-center">
           {formState.errors._form?.join(", ")}
         </p>

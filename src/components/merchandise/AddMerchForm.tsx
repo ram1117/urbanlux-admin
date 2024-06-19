@@ -1,20 +1,10 @@
 "use client";
 
 import { IAddMerchFormState, IBrand, ICategory } from "@/interfaces";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import FormSubmit from "@/atoms/FormSubmit";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import AddMerchAction from "@/app/actions/addmerch.action";
 import { useFormState } from "react-dom";
+import { FormInput, FormTextArea, FormSelect, FormFile } from "@/atoms";
 
 interface AddMerchFormProps {
   brands: IBrand[];
@@ -30,156 +20,56 @@ const AddMerchForm = ({ brands, categories }: AddMerchFormProps) => {
       className="my-12 flex flex-col gap-4 max-w-[768px] mx-auto"
       action={formAction}
     >
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="name" className="w-full md:w-1/4">
-            Name
-          </Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            className="rounded-none w-full md:w-3/4"
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.name?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="description" className="w-full md:w-1/4">
-            Description
-          </Label>
-          <Textarea
-            id="description"
-            name="description"
-            className="rounded-none w-full md:w-3/4"
-            rows={7}
-          ></Textarea>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.description?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="features" className="w-full md:w-1/4">
-            Features - separate lines with &ldquo;/&rdquo;
-          </Label>
-          <Textarea
-            id="features"
-            name="features"
-            className="rounded-none w-full md:w-3/4"
-            rows={7}
-          ></Textarea>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.features?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="brand" className="w-full md:w-1/4">
-            Select Brand
-          </Label>
-          <Select name="brand">
-            <SelectTrigger className="w-full md:w-3/4 rounded-none">
-              <SelectValue placeholder="" />
-            </SelectTrigger>
-            <SelectContent id="brand">
-              <SelectGroup>
-                {brands.map((brand: IBrand) => (
-                  <SelectItem key={brand._id} value={brand._id}>
-                    {brand.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.brand?.join(", ")}
-        </p>
-      </div>
+      <FormInput
+        label={"Name"}
+        type={"text"}
+        name={"name"}
+        errormsg={formState.errors.name?.join(", ")}
+      ></FormInput>
 
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="category" className="w-full md:w-1/4">
-            Select Category
-          </Label>
-          <Select name="category">
-            <SelectTrigger className="w-full md:w-3/4 rounded-none">
-              <SelectValue placeholder="" />
-            </SelectTrigger>
-            <SelectContent id="category">
-              <SelectGroup>
-                {categories.map((category: ICategory) => (
-                  <SelectItem key={category._id} value={category._id}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.category?.join(", ")}
-        </p>
-      </div>
+      <FormTextArea
+        label={"Description"}
+        name={"description"}
+        errormsg={formState.errors.description?.join(",")}
+      ></FormTextArea>
 
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="sizes" className="w-full md:w-1/4">
-            Sizes -&ldquo;,&rdquo; separated
-          </Label>
-          <Input
-            id="sizes"
-            name="sizes"
-            type="text"
-            className="rounded-none w-full md:w-3/4"
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.sizes?.join(", ")}
-        </p>
-      </div>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="thumbnail" className="w-full md:w-1/4">
-            Thumbnail
-          </Label>
-          <Input
-            id="thumbnail"
-            name="thumbnail"
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            className="rounded-none  w-full md:w-3/4"
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.thumbnail?.join(", ")}
-        </p>
-      </div>
+      <FormTextArea
+        label={`Features - separate by "/"`}
+        name={"features"}
+        errormsg={formState.errors.features?.join(",")}
+      ></FormTextArea>
 
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col md:flex-row gap-2 md:items-center">
-          <Label htmlFor="images" className="w-full md:w-1/4">
-            Images
-          </Label>
-          <Input
-            id="images"
-            name="images"
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            className="rounded-none  w-full md:w-3/4"
-            multiple
-          ></Input>
-        </div>
-        <p className="text-xs text-red-800 text-center">
-          {formState.errors.images?.join(", ")}
-        </p>
-      </div>
+      <FormSelect
+        name={"brand"}
+        label={"Select Brand"}
+        items={brands}
+        errorMsg={formState.errors.brand?.join(", ")}
+      ></FormSelect>
+
+      <FormSelect
+        name={"brand"}
+        label={"Select Category"}
+        items={categories}
+        errorMsg={formState.errors.category?.join(", ")}
+      ></FormSelect>
+
+      <FormInput
+        label={`Sizes- "," separated`}
+        type={"text"}
+        name={"sizes"}
+      ></FormInput>
+      <FormFile
+        name={"thumbnail"}
+        label={"Thumbnail"}
+        errorMsg={formState.errors.sizes?.join(",")}
+      ></FormFile>
+
+      <FormFile
+        name={"images"}
+        label={"Images"}
+        multiple={true}
+        errorMsg={formState.errors.images?.join(",")}
+      ></FormFile>
 
       <p className="text-xs text-red-800 text-center">
         {formState.errors._form?.join(", ")}

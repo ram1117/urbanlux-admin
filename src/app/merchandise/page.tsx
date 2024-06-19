@@ -1,4 +1,5 @@
 import DataNotFound from "@/atoms/DataNotFound";
+import NoItemsFound from "@/atoms/NoItemsFound";
 import MerchandiseItem from "@/components/merchandise/MerchandiseItem";
 import { Button } from "@/components/ui/button";
 import { IMerchandise } from "@/interfaces";
@@ -19,6 +20,7 @@ const Page = async () => {
           <Link href={"/merchandise/new"}>New Merchandise</Link>
         </Button>
       </div>
+      {data.length === 0 && <NoItemsFound></NoItemsFound>}
       <ul className="grid grid-cols-2 lg:grid-cols-6 w-full gap-4 my-4 p-4">
         {data.map((item: IMerchandise) => (
           <MerchandiseItem item={item} key={item._id}></MerchandiseItem>
