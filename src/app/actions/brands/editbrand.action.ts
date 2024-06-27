@@ -4,6 +4,7 @@ import { INewBrandFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { updateBrand } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -50,11 +51,13 @@ const EditBrandAction = async (
         bodyData = { ...restData, logo: imageUrl };
       }
     }
+    const { currentUser } = await getAuthenticatedAppForUser();
 
     const response = await makeApiRequest(
       API_METHODS.PATCH,
       updateBrand(id),
       bodyData,
+      await currentUser?.getIdToken(),
     );
 
     if (!response?.ok) {

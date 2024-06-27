@@ -3,6 +3,7 @@
 import { IGenericFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { deleteImage } from "@/lib/apiurls";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -11,9 +12,15 @@ const DeleteImageAction = async (
   image: string,
 ): Promise<IGenericFormState> => {
   try {
-    const response = await makeApiRequest(API_METHODS.PATCH, deleteImage(id), {
-      image,
-    });
+    const { currentUser } = await getAuthenticatedAppForUser();
+    const response = await makeApiRequest(
+      API_METHODS.PATCH,
+      deleteImage(id),
+      {
+        image,
+      },
+      await currentUser?.getIdToken(),
+    );
 
     if (!response?.ok) {
       const error = await response?.json();

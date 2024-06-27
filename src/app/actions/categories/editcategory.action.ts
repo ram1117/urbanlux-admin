@@ -4,6 +4,7 @@ import { IEditCategoryFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { updateCategory } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -45,11 +46,12 @@ const EditCategoryAction = async (
         bodyData = { ...restData, thumbnail: imageUrl };
       }
     }
-
+    const { currentUser } = await getAuthenticatedAppForUser();
     const response = await makeApiRequest(
       API_METHODS.PATCH,
       updateCategory(id),
       bodyData,
+      await currentUser?.getIdToken(),
     );
 
     if (!response?.ok) {

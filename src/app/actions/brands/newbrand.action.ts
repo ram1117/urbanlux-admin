@@ -4,6 +4,7 @@ import { INewBrandFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { createBrand } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -49,10 +50,12 @@ const NewBrandAction = async (
       };
     }
 
+    const { currentUser } = await getAuthenticatedAppForUser();
     const response = await makeApiRequest(
       API_METHODS.POST,
       createBrand(),
       bodyData,
+      await currentUser?.getIdToken(),
     );
 
     if (!response?.ok) {

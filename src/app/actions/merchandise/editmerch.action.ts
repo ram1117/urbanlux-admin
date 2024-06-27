@@ -3,6 +3,7 @@
 import { IEditMerchFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { updateMerchandise } from "@/lib/apiurls";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -29,10 +30,12 @@ const EditMerchAction = async (
   revalidatePath(`/merchandise/${id}`);
 
   try {
+    const { currentUser } = await getAuthenticatedAppForUser();
     const response = await makeApiRequest(
       API_METHODS.PATCH,
       updateMerchandise(id),
       { ...validation.data, features: validation.data.features.split("/") },
+      await currentUser?.getIdToken(),
     );
 
     if (!response?.ok) {
