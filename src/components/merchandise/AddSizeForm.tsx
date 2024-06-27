@@ -1,6 +1,6 @@
 "use client";
 
-import AddSizeAction from "@/app/actions/addsize.action";
+import AddSizeAction from "@/app/actions/merchandise/addsize.action";
 import { FormInput } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
 import { IAddSizeFormState } from "@/interfaces";

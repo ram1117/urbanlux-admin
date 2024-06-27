@@ -1,5 +1,8 @@
 const ADMIN_BASE_URL = process.env.API_ADMIN;
 const CLIENT_ADMIN_BASE_URL = process.env.NEXT_PUBLIC_API_ADMIN;
+const AUTH_BASE_URL = process.env.API_AUTH;
+
+export const postCreateUser = () => `${AUTH_BASE_URL}/auth/signup`;
 
 export const getCategories = () => `${ADMIN_BASE_URL}/category`;
 export const getCategory = (id: string) => `${ADMIN_BASE_URL}/category/${id}`;

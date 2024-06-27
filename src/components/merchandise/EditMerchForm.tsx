@@ -7,7 +7,7 @@ import {
   IMerchandise,
 } from "@/interfaces";
 import FormSubmit from "@/atoms/FormSubmit";
-import EditMerchAction from "@/app/actions/editmerch.action";
+import EditMerchAction from "@/app/actions/merchandise/editmerch.action";
 import { useFormState } from "react-dom";
 import { FormInput, FormTextArea, FormSelect } from "@/atoms";
 import { useEffect } from "react";

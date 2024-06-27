@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useFormState } from "react-dom";
 import ImageWrapper from "@/atoms/ImageWrapper";
-import EditBrandAction from "@/app/actions/editbrand.action";
+import EditBrandAction from "@/app/actions/brands/editbrand.action";
 import { useEffect } from "react";
 
 interface EditBrandFormProps {
