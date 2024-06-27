@@ -5,10 +5,25 @@ import NewBrandDialog from "@/components/brands/NewBrandDialog";
 import { IBrand } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getBrands } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 
 const Page = async () => {
-  const response = await makeApiRequest(API_METHODS.GET, getBrands());
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
+
+  const response = await makeApiRequest(
+    API_METHODS.GET,
+    getBrands(),
+    {},
+    await currentUser?.getIdToken(),
+  );
+
   if (!response?.ok) {
+    const error = await response?.json();
+    console.log(error.message);
     return <DataNotFound></DataNotFound>;
   }
   const data = await response.json();

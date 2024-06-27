@@ -5,9 +5,20 @@ import NewCategoryDialog from "@/components/categories/NewCategoryDialog";
 import { ICategory } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getCategories } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 
 const Page = async () => {
-  const response = await makeApiRequest(API_METHODS.GET, getCategories());
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
+  const response = await makeApiRequest(
+    API_METHODS.GET,
+    getCategories(),
+    {},
+    await currentUser?.getIdToken(),
+  );
   if (!response?.ok) {
     return <DataNotFound></DataNotFound>;
   }

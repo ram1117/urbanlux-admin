@@ -2,9 +2,20 @@ import DataNotFound from "@/atoms/DataNotFound";
 import AddMerchForm from "@/components/merchandise/AddMerchForm";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getBrands, getCategories } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 
 const Page = async () => {
-  const brandResponse = await makeApiRequest(API_METHODS.GET, getBrands());
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
+  const brandResponse = await makeApiRequest(
+    API_METHODS.GET,
+    getBrands(),
+    {},
+    await currentUser?.getIdToken(),
+  );
   if (!brandResponse?.ok) return <DataNotFound></DataNotFound>;
   const brandData = await brandResponse.json();
 

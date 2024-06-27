@@ -5,10 +5,21 @@ import { Button } from "@/components/ui/button";
 import { IMerchandise } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getAllMerchandise } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 import Link from "next/link";
 
 const Page = async () => {
-  const response = await makeApiRequest(API_METHODS.GET, getAllMerchandise());
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
+  const response = await makeApiRequest(
+    API_METHODS.GET,
+    getAllMerchandise(),
+    {},
+    await currentUser?.getIdToken(),
+  );
   if (!response?.ok) return <DataNotFound></DataNotFound>;
 
   const data = await response.json();
