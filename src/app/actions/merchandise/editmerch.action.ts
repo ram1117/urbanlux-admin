@@ -42,9 +42,6 @@ const EditMerchAction = async (
       const error = await response?.json();
       return { success: false, errors: { _form: [error.message] } };
     }
-
-    const data = await response.json();
-    console.log(data);
   } catch (error) {
     if (error instanceof Error)
       return { success: false, errors: { _form: [error.message] } };

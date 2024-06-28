@@ -136,3 +136,70 @@ export interface ISignupFormState {
     mobile?: string[];
   };
 }
+
+export interface IAddressItem {
+  _id: string;
+  fullname: string;
+  label: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  country: string;
+  user: string;
+}
+
+export interface IOrderItem {
+  _id: string;
+  merchandise: string;
+  merchandise_name: string;
+  merchandise_thumbnail: string;
+  quantity: number;
+  size: string;
+  subtotal: number;
+  user: string;
+  inventory: string;
+  createdAt: string;
+  updatedAt: string;
+  cancelled: boolean;
+}
+
+export interface IOrder {
+  _id: string;
+  items: IOrderItem[];
+  total: number;
+  address: IAddressItem;
+  payment_status: string;
+  order_status: string;
+
+  createdAt: string;
+  updatedAt: string;
+  cancelled: boolean;
+  user: { _id: string; firstname: string; email: string };
+}
+
+export interface INewOrders {
+  placed: IOrder[];
+  confirmed: IOrder[];
+}
+
+export interface IOrderFilterFormState {
+  data: IOrder[];
+  success: boolean;
+  errors: {
+    _form?: string[];
+    order_id?: string[];
+    user_name?: string[];
+    user_email?: string[];
+    order_date?: string[];
+  };
+}
+
+export enum ORDER_STATUS {
+  PLACED = "placed",
+  CONFIRMED = "confirmed",
+  CANCELLED = "cancelled",
+  FULFILLED = "fulfilled",
+  NOTFULFILLED = "not fulfilled",
+}

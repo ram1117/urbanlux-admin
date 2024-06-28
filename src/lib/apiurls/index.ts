@@ -30,3 +30,9 @@ export const addNewSize = (id: string) => `${ADMIN_BASE_URL}/items/size/${id}`;
 
 export const getClientBrands = () => `${CLIENT_ADMIN_BASE_URL}/brands`;
 export const getClientCategories = () => `${CLIENT_ADMIN_BASE_URL}/category`;
+
+export const getOrdersClient = (status: string) =>
+  `${CLIENT_ADMIN_BASE_URL}/orders?order_status=${status}`;
+
+export const getAllOrdersClient = () =>
+  `${CLIENT_ADMIN_BASE_URL}/orders/allorders`;

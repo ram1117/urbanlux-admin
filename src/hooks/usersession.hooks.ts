@@ -3,6 +3,18 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { firebaseConfig } from "@/lib/firebase/firebase.config";
 
+export const useCurrentUser = () => {
+  const [token, setToken] = useState<string>();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged((authUser) => {
+      authUser?.getIdToken().then((token) => setToken(token));
+    });
+
+    return () => unsubscribe();
+  }, []);
+  return token;
+};
+
 export const useUserSession = (initialUser: any) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(initialUser);
