@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import OrderItems from "./OrderItems";
+import Orders from "./Orders";
 import { getOrdersClient } from "@/lib/apiurls";
 import { ORDER_STATUS } from "@/interfaces";
 
@@ -19,7 +19,7 @@ const OrdersTab = () => {
           <TabsTrigger value={ORDER_STATUS.CONFIRMED} className="py-3">
             Confirmed Orders
           </TabsTrigger>
-          <TabsTrigger value={ORDER_STATUS.FULFILLED} className="py-3">
+          <TabsTrigger value={ORDER_STATUS.DISPATCHED} className="py-3">
             Fulfilled Orders
           </TabsTrigger>
           <TabsTrigger value={"All"} className="py-3">
@@ -27,20 +27,22 @@ const OrdersTab = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value={ORDER_STATUS.PLACED}>
-          <OrderItems url={getOrdersClient(ORDER_STATUS.PLACED)}></OrderItems>
+          <Orders
+            pathname={`/placed`}
+            url={getOrdersClient(ORDER_STATUS.PLACED)}
+          ></Orders>
         </TabsContent>
         <TabsContent value={ORDER_STATUS.CONFIRMED}>
-          <OrderItems
+          <Orders
+            pathname="/confirmed"
             url={getOrdersClient(ORDER_STATUS.CONFIRMED)}
-          ></OrderItems>
+          ></Orders>
         </TabsContent>
-        <TabsContent value={ORDER_STATUS.FULFILLED}>
-          <OrderItems
-            url={getOrdersClient(ORDER_STATUS.FULFILLED)}
-          ></OrderItems>
+        <TabsContent value={ORDER_STATUS.DISPATCHED}>
+          <Orders url={getOrdersClient(ORDER_STATUS.DISPATCHED)}></Orders>
         </TabsContent>
         <TabsContent value={"All"}>
-          <OrderItems url={getOrdersClient("all")}></OrderItems>
+          <Orders url={getOrdersClient("all")}></Orders>
         </TabsContent>
       </Tabs>
     </section>

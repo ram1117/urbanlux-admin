@@ -33,6 +33,11 @@ export const getClientCategories = () => `${CLIENT_ADMIN_BASE_URL}/category`;
 
 export const getOrdersClient = (status: string) =>
   `${CLIENT_ADMIN_BASE_URL}/orders?order_status=${status}`;
-
 export const getAllOrdersClient = () =>
   `${CLIENT_ADMIN_BASE_URL}/orders/allorders`;
+
+export const getOrderDetail = (id: string) => `${ADMIN_BASE_URL}/orders/${id}`;
+export const confirmOrder = (id: string) =>
+  `${ADMIN_BASE_URL}/orders/confirm/${id}`;
+export const dispatchOrder = (id: string) =>
+  `${ADMIN_BASE_URL}/orders/dispatch/${id}`;

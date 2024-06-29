@@ -69,6 +69,17 @@ export interface IGenericFormState {
   errors: { _form?: string[] };
 }
 
+export interface IConfirmOrderFormState {
+  success?: boolean;
+  errors: { _form?: string[] };
+  data?: { available: boolean };
+}
+
+export interface IDispatchOrderFormState {
+  success?: boolean;
+  errors: { _form?: string[]; tracking_id?: string[] };
+}
+
 export interface IAddImageFormState {
   success?: boolean;
   errors: { _form?: string[]; image?: string[]; thumbnail?: string[] };
@@ -159,10 +170,10 @@ export interface IOrderItem {
   size: string;
   subtotal: number;
   user: string;
+  available: boolean;
   inventory: string;
   createdAt: string;
   updatedAt: string;
-  cancelled: boolean;
 }
 
 export interface IOrder {
@@ -172,7 +183,7 @@ export interface IOrder {
   address: IAddressItem;
   payment_status: string;
   order_status: string;
-
+  comments: string[];
   createdAt: string;
   updatedAt: string;
   cancelled: boolean;
@@ -200,6 +211,14 @@ export enum ORDER_STATUS {
   PLACED = "placed",
   CONFIRMED = "confirmed",
   CANCELLED = "cancelled",
-  FULFILLED = "fulfilled",
-  NOTFULFILLED = "not fulfilled",
+  DISPATCHED = "dispatched",
+}
+
+export enum PAYMENT_STATUS {
+  PENDING = "pending",
+  CONFIRMATION = "waiting confirmation",
+  COMPLETE = "complete",
+  REFUNDINITIATE = "refund initiated",
+  REFUNDCOMPLETE = "refund complete",
+  REFUNDPARTIAL = "partial refund initiated",
 }

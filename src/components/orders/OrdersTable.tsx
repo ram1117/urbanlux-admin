@@ -12,9 +12,10 @@ import Link from "next/link";
 
 interface OrdersTableProps {
   orders: IOrder[];
+  pathname: string;
 }
 
-const OrdersTable = ({ orders }: OrdersTableProps) => {
+const OrdersTable = ({ orders, pathname }: OrdersTableProps) => {
   if (orders.length === 0) return <p className="italic">No Orders found</p>;
   return (
     <Table>
@@ -32,7 +33,7 @@ const OrdersTable = ({ orders }: OrdersTableProps) => {
           <TableRow key={order._id}>
             <TableCell>{formatDate(order.updatedAt)}</TableCell>
             <TableCell>
-              <Link href={`/orders/${order._id}`} className="underline">
+              <Link href={`${pathname}/${order._id}`} className="underline">
                 {order._id}
               </Link>
             </TableCell>

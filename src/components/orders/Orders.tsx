@@ -9,11 +9,12 @@ import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import OrderFilterAccordion from "./OrderFilterAccordion";
 
-interface OrderItemsProps {
+interface OrdersProps {
   url: string;
+  pathname?: string;
 }
 
-const OrderItems = ({ url }: OrderItemsProps) => {
+const Orders = ({ url, pathname = "/orders" }: OrdersProps) => {
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
@@ -69,9 +70,11 @@ const OrderItems = ({ url }: OrderItemsProps) => {
           <Skeleton className="w-full h-4"></Skeleton>
         </div>
       )}
-      {!loading && <OrdersTable orders={orders}></OrdersTable>}
+      {!loading && (
+        <OrdersTable pathname={pathname} orders={orders}></OrdersTable>
+      )}
     </div>
   );
 };
 
-export default OrderItems;
+export default Orders;

@@ -1,5 +1,7 @@
 import DataNotFound from "@/atoms/DataNotFound";
+import ConfirmOrderForm from "@/components/orders/orderpage/ConfirmOrderForm";
 import OrderSection from "@/atoms/OrderSection";
+
 import { IOrder } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getOrderDetail } from "@/lib/apiurls";
@@ -19,7 +21,7 @@ const Page = async ({ params }: { params: { orderid: string } }) => {
 
   return (
     <OrderSection orderData={orderData}>
-      <></>
+      <ConfirmOrderForm orderid={orderData._id}></ConfirmOrderForm>
     </OrderSection>
   );
 };
