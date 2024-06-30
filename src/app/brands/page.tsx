@@ -22,8 +22,6 @@ const Page = async () => {
   );
 
   if (!response?.ok) {
-    const error = await response?.json();
-    console.log(error.message);
     return <DataNotFound></DataNotFound>;
   }
   const data = await response.json();

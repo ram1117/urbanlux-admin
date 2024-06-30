@@ -2,7 +2,12 @@ import DispatchOrderAction from "@/app/actions/orders/dispatchorder.action";
 import { FormInput } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
 import { Checkbox } from "@/components/ui/checkbox";
-import { IDispatchOrderFormState, IOrderItem } from "@/interfaces";
+import {
+  IDispatchOrderFormState,
+  IOrderItem,
+  ORDER_STATUS,
+} from "@/interfaces";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useFormState } from "react-dom";
 
@@ -10,6 +15,7 @@ interface DispatchOrderFormProps {
   orderid: string;
   orderitems: IOrderItem[];
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  orderstatus: string;
 }
 
 const initialState: IDispatchOrderFormState = { success: false, errors: {} };
@@ -18,13 +24,18 @@ const DispatchOrderForm = ({
   orderid,
   orderitems,
   setOpen,
+  orderstatus,
 }: DispatchOrderFormProps) => {
+  const router = useRouter();
   const bindedAction = DispatchOrderAction.bind(null, orderid);
   const [formState, formAction] = useFormState(bindedAction, initialState);
 
   useEffect(() => {
-    if (formState.success) setOpen(false);
-  }, [formState.success, setOpen]);
+    if (formState.success) {
+      setOpen(false);
+      router.push("/");
+    }
+  }, [formState.success, setOpen, router]);
 
   return (
     <form className="flex flex-col gap-4" action={formAction}>
@@ -66,7 +77,11 @@ const DispatchOrderForm = ({
       <p className="text-sm text-red-800">
         {formState.errors._form?.join(",")}
       </p>
-      <FormSubmit className="w-max" text="Dispatch"></FormSubmit>
+      <FormSubmit
+        className="w-max"
+        text="Dispatch"
+        disabled={orderstatus === ORDER_STATUS.DISPATCHED}
+      ></FormSubmit>
     </form>
   );
 };

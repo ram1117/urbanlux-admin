@@ -5,6 +5,7 @@ import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { confirmOrder } from "@/lib/apiurls";
 import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const ConfirmOrderAction = async (
   orderid: string,
@@ -27,7 +28,7 @@ const ConfirmOrderAction = async (
     return { success: false, errors: { _form: ["something went wrong"] } };
   }
   revalidatePath(`/orders/${orderid}`);
-  return { success: true, errors: {} };
+  redirect("/");
 };
 
 export default ConfirmOrderAction;

@@ -16,8 +16,13 @@ import { Button } from "@/components/ui/button";
 interface DispatchDialogProps {
   orderid: string;
   orderitems: IOrderItem[];
+  orderstatus: string;
 }
-const DispatchDialog = ({ orderid, orderitems }: DispatchDialogProps) => {
+const DispatchDialog = ({
+  orderid,
+  orderitems,
+  orderstatus,
+}: DispatchDialogProps) => {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -34,6 +39,7 @@ const DispatchDialog = ({ orderid, orderitems }: DispatchDialogProps) => {
           orderid={orderid}
           orderitems={orderitems}
           setOpen={setOpen}
+          orderstatus={orderstatus}
         ></DispatchOrderForm>
       </DialogContent>
     </Dialog>

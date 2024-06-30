@@ -30,7 +30,7 @@ const OrderItemsTable = ({ items }: OrderItemsTableProps) => {
         {items.map((item) => (
           <TableRow
             key={item._id}
-            className={`capitalize ${item.available ? "opacity-100" : "opacity-40"}`}
+            className={`capitalize ${item.available || item.available === null ? "opacity-100" : "opacity-40"}`}
           >
             <TableCell>
               <ImageWrapper
@@ -43,7 +43,9 @@ const OrderItemsTable = ({ items }: OrderItemsTableProps) => {
             <TableCell>{item.size}</TableCell>
             <TableCell>{item.quantity}</TableCell>
             <TableCell>{item.subtotal}</TableCell>
-            <TableCell>{item.available ? "Yes" : "No"}</TableCell>
+            <TableCell>
+              {item.available ? "Yes" : item.available === null ? "TBA" : "No"}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
