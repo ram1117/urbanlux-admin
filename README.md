@@ -8,6 +8,8 @@ Tech stack - Typescript, TailwindCSS
 
 ### Live Demo
 
+https://github.com/ram1117/urbanlux-admin/assets/116718155/f21697ea-20a4-4395-abc8-b43bc5689b2c
+
 ## Getting Started
 
 ### Dependencies
