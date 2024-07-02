@@ -1,6 +1,6 @@
 "use client";
 
-import DeleteImageAction from "@/app/actions/deleteimage.action";
+import DeleteImageAction from "@/app/actions/merchandise/deleteimage.action";
 import FormSubmit from "@/atoms/FormSubmit";
 import ImageWrapper from "@/atoms/ImageWrapper";
 import { IGenericFormState } from "@/interfaces";

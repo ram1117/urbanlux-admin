@@ -4,6 +4,7 @@ import { IAddImageFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { addImage } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -49,11 +50,12 @@ const AddImageAction = async (
       if (validation.data.thumbnail === "yes") {
         bodyData = { ...bodyData, thumbnail: imageUrl };
       }
-
+      const { currentUser } = await getAuthenticatedAppForUser();
       const response = await makeApiRequest(
         API_METHODS.PATCH,
         addImage(id),
         bodyData,
+        await currentUser?.getIdToken(),
       );
       if (!response?.ok) {
         const error = await response?.json();

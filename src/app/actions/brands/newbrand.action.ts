@@ -2,8 +2,9 @@
 
 import { INewBrandFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
-import { updateBrand } from "@/lib/apiurls";
+import { createBrand } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -11,13 +12,9 @@ const IMAGE_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 const validationSchema = z.object({
   logo: z
     .any()
+    .refine((file) => file !== null, "Image required")
     .refine(
-      (file) =>
-        file.length > 0
-          ? IMAGE_TYPES.includes(file?.[0]?.type)
-            ? true
-            : false
-          : true,
+      (file) => IMAGE_TYPES.includes(file?.type),
       "Invalid file. choose PNG/JPG/JPEG image",
     ),
   name: z.string().min(3),
@@ -26,8 +23,7 @@ const validationSchema = z.object({
   create_store: z.string().min(2, { message: "Required" }),
 });
 
-const EditBrandAction = async (
-  id: string,
+const NewBrandAction = async (
   formState: INewBrandFormState,
   formData: FormData,
 ): Promise<INewBrandFormState> => {
@@ -38,23 +34,28 @@ const EditBrandAction = async (
   if (!validation.success) {
     return { success: false, errors: validation.error.flatten().fieldErrors };
   }
+
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { logo, ...restData } = validation.data;
-    let bodyData: object = {
-      ...restData,
-      create_store: validation.data.create_store === "yes",
-    };
-    if (logo.size > 0) {
-      const imageUrl = await uploadImage(validation.data.logo, "brands");
-      if (imageUrl) {
-        bodyData = { ...restData, logo: imageUrl };
-      }
+    let bodyData: object = {};
+
+    const imageUrl = await uploadImage(validation.data.logo, "brands");
+    if (imageUrl) {
+      bodyData = {
+        ...restData,
+        logo: imageUrl,
+        create_store: restData.create_store === "yes",
+        brand_code: `brand_${restData.brand_code}`,
+      };
     }
 
+    const { currentUser } = await getAuthenticatedAppForUser();
     const response = await makeApiRequest(
-      API_METHODS.PATCH,
-      updateBrand(id),
+      API_METHODS.POST,
+      createBrand(),
       bodyData,
+      await currentUser?.getIdToken(),
     );
 
     if (!response?.ok) {
@@ -67,8 +68,8 @@ const EditBrandAction = async (
     return { success: false, errors: { _form: ["Something went wrong"] } };
   }
 
-  revalidatePath(`/brands/${id}`);
+  revalidatePath(`/brands`);
   return { success: true, errors: {} };
 };
 
-export default EditBrandAction;
+export default NewBrandAction;

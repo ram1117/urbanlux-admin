@@ -3,6 +3,7 @@
 import { IUpdateInventoryFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { updateInventory } from "@/lib/apiurls";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -25,10 +26,12 @@ const UpdateInventoryAction = async (
   }
 
   try {
+    const { currentUser } = await getAuthenticatedAppForUser();
     const response = await makeApiRequest(
       API_METHODS.PATCH,
       updateInventory(id),
       { ...validation.data, merchandiseId },
+      await currentUser?.getIdToken(),
     );
     if (!response?.ok) {
       const error = await response?.json();

@@ -12,6 +12,7 @@ import EditMerchForm from "./EditMerchForm";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getClientBrands, getClientCategories } from "@/lib/apiurls";
 import { useEffect, useState } from "react";
+import { useCurrentUser } from "@/hooks/usersession.hooks";
 
 interface EditMerchDialogProps {
   merchandise: IMerchandise;
@@ -21,22 +22,29 @@ const EditMerchDialog = ({ merchandise }: EditMerchDialogProps) => {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [apiError, setApiError] = useState<string[]>([]);
+  const token = useCurrentUser();
 
   useEffect(() => {
-    makeApiRequest(API_METHODS.GET, getClientBrands())
-      .then((response) => response?.json())
-      .then((data) => {
-        setBrands(data);
-      })
-      .catch((error: Error) => setApiError((prev) => [...prev, error.message]));
+    if (token) {
+      makeApiRequest(API_METHODS.GET, getClientBrands(), {}, token)
+        .then((response) => response?.json())
+        .then((data) => {
+          setBrands(data);
+        })
+        .catch((error: Error) =>
+          setApiError((prev) => [...prev, error.message]),
+        );
 
-    makeApiRequest(API_METHODS.GET, getClientCategories())
-      .then((response) => response?.json())
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((error: Error) => setApiError((prev) => [...prev, error.message]));
-  }, []);
+      makeApiRequest(API_METHODS.GET, getClientCategories(), {}, token)
+        .then((response) => response?.json())
+        .then((data) => {
+          setCategories(data);
+        })
+        .catch((error: Error) =>
+          setApiError((prev) => [...prev, error.message]),
+        );
+    }
+  }, [token]);
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>

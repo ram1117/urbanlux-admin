@@ -5,7 +5,7 @@ import { IInventory, IUpdateInventoryFormState } from "@/interfaces";
 import { TableCell } from "@/components/ui/table";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import UpdateInventoryAction from "@/app/actions/updateinventory.action";
+import UpdateInventoryAction from "@/app/actions/merchandise/updateinventory.action";
 import { useFormState } from "react-dom";
 
 interface UpdateInventoryFormProps {

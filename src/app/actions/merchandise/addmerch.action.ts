@@ -4,6 +4,7 @@ import { IAddMerchFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { createMerchandise } from "@/lib/apiurls";
 import uploadImage from "@/lib/azure/azure.upload";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -63,6 +64,7 @@ const AddMerchAction = async (
     );
 
     if (imagesUrl && thumbnailUrl) {
+      const { currentUser } = await getAuthenticatedAppForUser();
       const response = await makeApiRequest(
         API_METHODS.POST,
         createMerchandise(),
@@ -73,6 +75,7 @@ const AddMerchAction = async (
           features: validation.data.features.split("/"),
           sizes: validation.data.sizes.split(","),
         },
+        await currentUser?.getIdToken(),
       );
       if (!response?.ok) {
         const error = await response?.json();

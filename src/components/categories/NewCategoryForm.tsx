@@ -1,6 +1,6 @@
 "use client";
 
-import CreateCategoryAction from "@/app/actions/createcategory.action";
+import CreateCategoryAction from "@/app/actions/categories/createcategory.action";
 import { FormFile, FormInput, FormTextArea } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
 import { IEditCategoryFormState } from "@/interfaces";

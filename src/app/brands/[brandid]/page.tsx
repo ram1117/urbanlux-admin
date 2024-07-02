@@ -4,10 +4,22 @@ import EditBrandDialog from "@/components/brands/EditBrandDialog";
 import { IBrand } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getBrand } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 
 const Page = async ({ params }: { params: { brandid: string } }) => {
   const id = params.brandid;
-  const response = await makeApiRequest(API_METHODS.GET, getBrand(id));
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
+
+  const response = await makeApiRequest(
+    API_METHODS.GET,
+    getBrand(id),
+    {},
+    await currentUser?.getIdToken(),
+  );
   if (!response?.ok) return <DataNotFound></DataNotFound>;
 
   const data: IBrand = await response.json();

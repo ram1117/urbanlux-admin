@@ -2,7 +2,7 @@
 
 import { IAddMerchFormState, IBrand, ICategory } from "@/interfaces";
 import FormSubmit from "@/atoms/FormSubmit";
-import AddMerchAction from "@/app/actions/addmerch.action";
+import AddMerchAction from "@/app/actions/merchandise/addmerch.action";
 import { useFormState } from "react-dom";
 import { FormInput, FormTextArea, FormSelect, FormFile } from "@/atoms";
 

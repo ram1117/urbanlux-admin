@@ -3,6 +3,7 @@
 import { IAddSizeFormState } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { addNewSize } from "@/lib/apiurls";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/firebase.server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -22,12 +23,13 @@ const AddSizeAction = async (
   if (!validation.success) {
     return { success: false, errors: validation.error.flatten().fieldErrors };
   }
-
+  const { currentUser } = await getAuthenticatedAppForUser();
   try {
     const response = await makeApiRequest(
       API_METHODS.POST,
       addNewSize(id),
       validation.data,
+      await currentUser?.getIdToken(),
     );
 
     if (!response?.ok) {

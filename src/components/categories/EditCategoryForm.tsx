@@ -1,6 +1,6 @@
 "use client";
 
-import EditCategoryAction from "@/app/actions/editcategory.action";
+import EditCategoryAction from "@/app/actions/categories/editcategory.action";
 import { FormFile, FormInput, FormTextArea } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
 import ImageWrapper from "@/atoms/ImageWrapper";

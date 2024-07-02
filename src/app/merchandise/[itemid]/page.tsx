@@ -16,11 +16,19 @@ import {
 import { IInventory, IMerchandise } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getMerchandise } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 
 const Page = async ({ params }: { params: { itemid: string } }) => {
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
   const response = await makeApiRequest(
     API_METHODS.GET,
     getMerchandise(params.itemid),
+    {},
+    await currentUser?.getIdToken(),
   );
   if (!response?.ok) return <DataNotFound></DataNotFound>;
 

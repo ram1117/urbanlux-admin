@@ -1,6 +1,6 @@
 "use client";
 
-import NewBrandAction from "@/app/actions/newbrand.action";
+import NewBrandAction from "@/app/actions/brands/newbrand.action";
 import { FormFile, FormInput, FormTextArea } from "@/atoms";
 import FormSubmit from "@/atoms/FormSubmit";
 import { Label } from "@/components/ui/label";

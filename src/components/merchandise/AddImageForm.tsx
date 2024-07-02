@@ -3,7 +3,7 @@
 import FormSubmit from "@/atoms/FormSubmit";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import AddImageAction from "@/app/actions/addimage.action";
+import AddImageAction from "@/app/actions/merchandise/addimage.action";
 import { useFormState } from "react-dom";
 import { IAddImageFormState } from "@/interfaces";
 import { FormFile } from "@/atoms";

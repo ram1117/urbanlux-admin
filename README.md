@@ -2,13 +2,13 @@
 
 ## Description
 
-**Urban Trend** is a NextJS14 admin portal for and e-commerce store, with full authentication implemented in NestJs backend, payment integration with Stripe.
+**Urban Trend** is a NextJS14 admin portal for UrbanTrend e-commerce application. Admin/seller user can add or modify merchandise, brands and categories. The admin user can confirm user orders, dispatch orders.
 
 Tech stack - Typescript, TailwindCSS
 
 ### Live Demo
 
-[Live Demo on Vercel](TBA)
+https://github.com/ram1117/urbanlux-admin/assets/116718155/f21697ea-20a4-4395-abc8-b43bc5689b2c
 
 ## Getting Started
 
@@ -22,12 +22,12 @@ Tech stack - Typescript, TailwindCSS
 - Clone the repo in your local machine.
 
   ```
-  https://github.com/ram1117/urbanlux-fe.git
+  https://github.com/ram1117/urbanlux-admin.git
   ```
 
 - Run the following command to install the project dependencies using npm
   ```
-  cd urbanlux-fe
+  cd urbanlux-admin
   ```
   ```
   npm install
@@ -46,7 +46,7 @@ Tech stack - Typescript, TailwindCSS
 Please raise a Github issue for errors or bugs.
 
 ```
-https://github.com/ram1117/urbanlux-fe/issues
+https://github.com/ram1117/urbanlux-admin/issues
 ```
 
 ## Authors

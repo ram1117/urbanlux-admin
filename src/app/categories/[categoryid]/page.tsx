@@ -4,10 +4,21 @@ import EditCategoryDialog from "@/components/categories/EditCategoryDialog";
 import { ICategory } from "@/interfaces";
 import { API_METHODS, makeApiRequest } from "@/lib/apiservice";
 import { getCategory } from "@/lib/apiurls";
+import {
+  getAuthenticatedAppForUser,
+  redirectToLogin,
+} from "@/lib/firebase/firebase.server";
 
 const Page = async ({ params }: { params: { categoryid: string } }) => {
   const id = params.categoryid;
-  const response = await makeApiRequest(API_METHODS.GET, getCategory(id));
+  await redirectToLogin();
+  const { currentUser } = await getAuthenticatedAppForUser();
+  const response = await makeApiRequest(
+    API_METHODS.GET,
+    getCategory(id),
+    {},
+    await currentUser?.getIdToken(),
+  );
   if (!response?.ok) return <DataNotFound></DataNotFound>;
 
   const data: ICategory = await response.json();

@@ -69,6 +69,17 @@ export interface IGenericFormState {
   errors: { _form?: string[] };
 }
 
+export interface IConfirmOrderFormState {
+  success?: boolean;
+  errors: { _form?: string[] };
+  data?: { available: boolean };
+}
+
+export interface IDispatchOrderFormState {
+  success?: boolean;
+  errors: { _form?: string[]; tracking_id?: string[] };
+}
+
 export interface IAddImageFormState {
   success?: boolean;
   errors: { _form?: string[]; image?: string[]; thumbnail?: string[] };
@@ -113,4 +124,101 @@ export interface IAddSizeFormState {
     _form?: string[];
     size?: string[];
   };
+}
+
+export interface SigninFormState {
+  success?: boolean;
+  errors: {
+    email?: string[];
+    password?: string[];
+    _form?: string[];
+  };
+}
+
+export interface ISignupFormState {
+  success?: boolean;
+  errors: {
+    _form?: string[];
+    firstname?: string[];
+    lastname?: string[];
+    email?: string[];
+    password?: string[];
+    password1?: string[];
+    mobile?: string[];
+  };
+}
+
+export interface IAddressItem {
+  _id: string;
+  fullname: string;
+  label: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  country: string;
+  user: string;
+}
+
+export interface IOrderItem {
+  _id: string;
+  merchandise: string;
+  merchandise_name: string;
+  merchandise_thumbnail: string;
+  quantity: number;
+  size: string;
+  subtotal: number;
+  user: string;
+  available: boolean;
+  inventory: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IOrder {
+  _id: string;
+  items: IOrderItem[];
+  total: number;
+  address: IAddressItem;
+  payment_status: string;
+  order_status: string;
+  comments: string[];
+  createdAt: string;
+  updatedAt: string;
+  cancelled: boolean;
+  user: { _id: string; firstname: string; email: string };
+}
+
+export interface INewOrders {
+  placed: IOrder[];
+  confirmed: IOrder[];
+}
+
+export interface IOrderFilterFormState {
+  data: IOrder[];
+  success: boolean;
+  errors: {
+    _form?: string[];
+    order_id?: string[];
+    user_name?: string[];
+    user_email?: string[];
+    order_date?: string[];
+  };
+}
+
+export enum ORDER_STATUS {
+  PLACED = "placed",
+  CONFIRMED = "confirmed",
+  CANCELLED = "cancelled",
+  DISPATCHED = "dispatched",
+}
+
+export enum PAYMENT_STATUS {
+  PENDING = "pending",
+  CONFIRMATION = "waiting confirmation",
+  COMPLETE = "complete",
+  REFUNDINITIATE = "refund initiated",
+  REFUNDCOMPLETE = "refund complete",
+  REFUNDPARTIAL = "partial refund initiated",
 }
