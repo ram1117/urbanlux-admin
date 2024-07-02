@@ -22,8 +22,14 @@ const Page = async () => {
   const categoryResponse = await makeApiRequest(
     API_METHODS.GET,
     getCategories(),
+    {},
+    await currentUser?.getIdToken(),
   );
-  if (!categoryResponse?.ok) return <DataNotFound></DataNotFound>;
+  if (!categoryResponse?.ok) {
+    const error = await categoryResponse?.json();
+    console.log(error.message);
+    return <DataNotFound></DataNotFound>;
+  }
   const categoryData = await categoryResponse.json();
 
   return (
